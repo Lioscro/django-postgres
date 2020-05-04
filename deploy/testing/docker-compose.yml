@@ -1,0 +1,16 @@
+version: "2"
+services:
+  db:
+    extends:
+      file: ../docker-compose-common.yml
+      service: db
+  app:
+    extends:
+      file: ../docker-compose-common.yml
+      service: app
+    command: make test
+    depends_on:
+      - db
+
+networks:
+  network:

@@ -1,0 +1,29 @@
+version: "2"
+services:
+  db:
+    extends:
+      file: ../docker-compose-common.yml
+      service: db
+    volumes:
+      - data:/var/lib/postgresql/data
+  app:
+    extends:
+      file: ../docker-compose-common.yml
+      service: app
+    command: make start
+    networks:
+      external:
+        aliases:
+          - app
+    depends_on:
+      - db
+    volumes:
+      - ../../app:/home/app/app
+      - ../../app/webapp.conf:/etc/nginx/sites-enabled/webapp.conf
+
+volumes:
+  data:
+
+networks:
+  network:
+  external:

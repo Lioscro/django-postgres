@@ -1,0 +1,25 @@
+version: "2"
+services:
+  db:
+    extends:
+      file: ../docker-compose-common.yml
+      service: db
+    restart: unless-stopped
+    volumes:
+      - data:/var/lib/postgresql/data
+  app:
+    extends:
+      file: ../docker-compose-common.yml
+      service: app
+    depends_on:
+      - db
+    restart: unless-stopped
+    volumes:
+      - media:/home/app/app/media
+
+volumes:
+  data:
+  media:
+
+networks:
+  network:

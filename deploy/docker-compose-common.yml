@@ -1,0 +1,28 @@
+version: "2"
+services:
+  db:
+    image: postgres:12.2
+    networks:
+      - network
+    environment:
+      LC_ALL: C.UTF-8
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD:
+
+  app:
+    build: ../app
+    image: ${IMAGE}
+    ports:
+      - "8080:8080"
+    networks:
+      - network
+    environment:
+      APP_ENVIRONMENT:
+      DJANGO_SECRET_KEY:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD:
+
+networks:
+  network:
